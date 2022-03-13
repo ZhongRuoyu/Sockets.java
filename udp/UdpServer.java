@@ -56,7 +56,7 @@ public class UdpServer {
     }
 
     public void serve(Function<String, String> responder) {
-        for (;;) {
+        while (true) {
             try {
                 byte[] bufReceive = new byte[BUFFER_SIZE];
                 DatagramPacket request =
