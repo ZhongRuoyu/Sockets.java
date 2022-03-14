@@ -1,5 +1,3 @@
-package examples;
-
 import java.io.IOException;
 import tcp.TcpServer;
 
