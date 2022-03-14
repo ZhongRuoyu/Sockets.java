@@ -2,12 +2,20 @@ import java.io.IOException;
 import tcp.TcpServer;
 
 public class TcpServerExample {
-    private static final int PORT = 8000;
-    private static final String RESPONSE = "response";
-
     public static void main(String[] args) {
-        int port = PORT;
-        String response = RESPONSE;
+        if (args.length != 1) {
+            System.err.printf("Usage: java %s <port>%n",
+                TcpServerExample.class.getName());
+            return;
+        }
+
+        int port;
+        try {
+            port = Integer.parseInt(args[0]);
+        } catch (NumberFormatException nfe) {
+            System.err.printf("Invalid port number: %s%n", args[0]);
+            return;
+        }
 
         TcpServer server;
         try {
@@ -18,7 +26,7 @@ public class TcpServerExample {
         }
 
         System.out.printf("Server listening at port %s...%n", port);
-        server.serve(str -> response);
+        server.serve(request -> request);
 
         try {
             server.close();
