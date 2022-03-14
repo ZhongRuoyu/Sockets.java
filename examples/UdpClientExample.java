@@ -5,14 +5,22 @@ import java.net.UnknownHostException;
 import udp.UdpClient;
 
 public class UdpClientExample {
-    private static final String REMOTE_HOSTNAME = "localhost";
-    private static final int REMOTE_PORT = 8000;
-    private static final String MESSAGE = "request";
-
     public static void main(String[] args) {
-        String remoteHostname = REMOTE_HOSTNAME;
-        int remotePort = REMOTE_PORT;
-        String message = MESSAGE;
+        if (args.length != 3) {
+            System.err.printf("Usage: java %s <hostname> <port> <message>%n",
+                UdpClientExample.class.getName());
+            return;
+        }
+
+        String remoteHostname = args[0];
+        int remotePort;
+        try {
+            remotePort = Integer.parseInt(args[1]);
+        } catch (NumberFormatException nfe) {
+            System.err.printf("Invalid port number: %s%n", args[1]);
+            return;
+        }
+        String message = args[2];
 
         InetAddress remoteAddress;
         try {
